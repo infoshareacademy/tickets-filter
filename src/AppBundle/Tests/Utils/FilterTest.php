@@ -8,7 +8,7 @@
  */
 namespace AppBundle\Tests\Utils;
 
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use AppBundle\Utils\Filter;
 
 class FilterTest extends PHPUnit_Framework_TestCase
 {

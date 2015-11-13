@@ -21,7 +21,6 @@ class Filter
         "trojmiasto",
         "3city"
     );
-    private $ticketsFrom3City = [];
 
     public function filterData (Array $tickets){
         $ticketsFrom3City= [];
