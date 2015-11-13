@@ -19,6 +19,10 @@ class ApiController extends Controller
      */
     public function importAction(Request $request)
     {
+        $logger = $this->get('logger');
+        $logger->info('I just got the logger');
+        $logger->error('An error occurred');
+
         $result = $this->callApi('GET', 'http://localhost:8080/tickets/web/tickets');
         $dateFromRest = json_decode($result);
         if ($dateFromRest == null) {
