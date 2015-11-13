@@ -19,7 +19,7 @@ class ApiController extends Controller
      */
     public function importAction(Request $request)
     {
-        $result = $this->callApi('GET', 'http://localhost:8080/tickets/web/tickets');
+        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
         $dateFromRest = json_decode($result);
         if ($dateFromRest == null) {
             return new JsonResponse(['error' => 'Tickets not found']);
