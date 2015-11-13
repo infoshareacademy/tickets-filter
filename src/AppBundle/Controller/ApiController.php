@@ -15,30 +15,11 @@ use Symfony\Component\HttpFoundation\Response;
 class ApiController extends Controller
 {
     /**
-     * @Route("/dummyRestServer")
-     * description: aaaaa... póki poprzednia aplikacja nie jest skończona - generuje gloopie dane ;)
-     */
-    public function dummyRestServerAction()
-    {
-        $dane1 = new Ticket('Bilety Polska Czechy Bilet Wr...IO HIT', 'http://allegro.pl/show_item.php?item=57621555201','description1', 15, 'sport' );
-        $dane2 = new Ticket('Bilety inny z Gdanska ', 'http://allegro.pl/show_item.php?item=57621533201','description32 k', 5, 'sport' );
-        $dane3 = new Ticket('Bilety trzeci ', 'http://allegro.pl/show_item.php?item=67821533201','description long Sopot', 10, 'sport' );
-
-        $table = array($dane1, $dane2, $dane3);
-
-
-        return new JsonResponse($table);
-    }
-
-
-
-
-    /**
      * @Route("/")
      */
     public function importAction(Request $request)
     {
-        $result = $this->callApi('GET', 'http://localhost:8080/tickets-filter/app_dev.php/dummyRestServer');
+        $result = $this->callApi('GET', 'http://localhost:8080/tickets/web/tickets');
         $dateFromRest = json_decode($result);
         if ($dateFromRest == null) {
             return new JsonResponse(['error' => 'Tickets not found']);
