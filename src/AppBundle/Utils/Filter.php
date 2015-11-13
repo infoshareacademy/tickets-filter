@@ -23,22 +23,23 @@ class Filter
     );
     private $ticketsFrom3City = [];
 
-    public function __construct()
-    {
-
-    }
-
     public function filterData (Array $tickets){
-        foreach( $tickets as $ticket ) {
+        $ticketsFrom3City= [];
+        foreach ($tickets as $ticket) {
             $is3CityTicket = 0;
-            foreach( $this->keywords as $keyword ){
-                if ( stripos($ticket->title, $keyword )
-                || stripos($ticket->description, $keyword) ) {
-                        $is3CityTicket = 1;
-                    }
+            foreach ($this->keywords as $keyword) {
+                if (
+                    stripos($ticket->title, $keyword) !== false
+                    || stripos($ticket->description, $keyword) !== false
+                ) {
+                    $is3CityTicket = 1;
+                }
             }
-            if( $is3CityTicket ){ $this->ticketsFrom3City = $ticket; }
+            if ($is3CityTicket) {
+                array_push($ticketsFrom3City, $ticket);
+            }
         }
+        return $ticketsFrom3City;
     }
 
 }
