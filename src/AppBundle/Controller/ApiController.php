@@ -30,9 +30,9 @@ class ApiController extends Controller
 
             if ($request->get('format') == 'pretty') {
 
-                return new PrettyJsonResponse($tickesFromTojmiasto);
+                return new PrettyJsonResponse($tickesFromTojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
             }
-            return new JsonResponse($tickesFromTojmiasto);
+            return new JsonResponse($tickesFromTojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
         }
     }
 
