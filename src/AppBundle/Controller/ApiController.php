@@ -11,6 +11,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
+
+use Symfony\Component\HttpKernel\HttpKernel;
+
 
 class ApiController extends Controller
 {
@@ -35,6 +39,39 @@ class ApiController extends Controller
             return new JsonResponse($tickesFromTojmiasto);
         }
     }
+
+
+    /**
+     * @Route("/update")
+     */
+    public function updateAction(Request $request)
+    {
+        $response = new Response(
+            'OK',
+            Response::HTTP_OK,
+            array('content-type' => 'text/html')
+        );
+        $response->prepare($request);
+        $response->send();
+
+        $kernel = new HttpKernel();
+        $kernel->terminate($request, $response);
+
+
+        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
+        $dateFromRest = json_decode($result);
+        if ($dateFromRest == null) {
+            return new Response('Error occurred', Response::HTTP_BAD_GATEWAY);
+        }
+        else {
+            $filter = new Filter();
+            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
+
+            return $response;
+        }
+
+    }
+
 
     private function callApi($method, $url, $data = false)
     {
