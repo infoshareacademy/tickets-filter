@@ -4,9 +4,52 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be3f791395f2f85e78b793435cee8899",
-    "content-hash": "97a65ddfd75e56eb06298c9192afa45f",
+    "hash": "04aea720a6ce9543d18188c9c7713b0b",
+    "content-hash": "b38250a7f909f2a7e952e6b07db807ea",
     "packages": [
+        {
+            "name": "bbit/async-dispatcher-bundle",
+            "version": "2.2",
+            "target-dir": "BBIT/AsyncDispatcherBundle",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BranchBit/AsyncDispatcherBundle.git",
+                "reference": "515d1a783cdc421747a5fe34d0a3b78e784864bc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BranchBit/AsyncDispatcherBundle/zipball/515d1a783cdc421747a5fe34d0a3b78e784864bc",
+                "reference": "515d1a783cdc421747a5fe34d0a3b78e784864bc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.2"
+            },
+            "require-dev": {
+                "satooshi/php-coveralls": "v0.6.1",
+                "symfony/symfony": ">=2.4.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-0": {
+                    "BBIT\\AsyncDispatcherBundle": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Janssens Sam",
+                    "email": "iwonderwhy5@hotmail.com",
+                    "homepage": "http://branchbit.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "symfony BBITAsyncDispatcherBundle",
+            "time": "2015-05-05 08:53:39"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -1694,19 +1737,13 @@
             "time": "2015-03-17 06:36:52"
         }
     ],
-    "aliases": [
-
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
         "php": ">=5.3.9"
     },
-    "platform-dev": [
-
-    ]
+    "platform-dev": []
 }
