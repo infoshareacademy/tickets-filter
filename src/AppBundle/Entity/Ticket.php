@@ -49,14 +49,10 @@ class Ticket
      */
     private $price;
 
-    /**
-     * @var date
-     *
-     * @ORM\Column(name="creationDate", type="date")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $creationDate;
 
+    public function __construct(){
+
+    }
 
     /**
      * Get id

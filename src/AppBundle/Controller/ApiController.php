@@ -28,6 +28,9 @@ class ApiController extends Controller
             $filter = new Filter();
             $tickesFromTojmiasto = $filter->filterData($dateFromRest);
 
+            $ticketsToDb = new DbController();
+            $ticketsToDb->saveToDB($tickesFromTojmiasto);
+
             if ($request->get('format') == 'pretty') {
 
                 return new PrettyJsonResponse($tickesFromTojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
