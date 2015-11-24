@@ -1,3 +1,5 @@
+/app/data.db3
+/vendor
 .idea
 /app/bootstrap.php.cache
 /app/cache/*

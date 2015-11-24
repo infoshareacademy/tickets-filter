@@ -19,35 +19,35 @@ class Ticket
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    public $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=250)
      */
-    private $title;
+    public $title;
 
     /**
      * @var string
      *
      * @ORM\Column(name="auctionUrl", type="string", length=250)
      */
-    private $auctionUrl;
+    public $auctionUrl;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="string", length=2000)
      */
-    private $description;
+    public $description;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="price", type="integer")
      */
-    private $price;
+    public $price;
 
 
     public function __construct(){
