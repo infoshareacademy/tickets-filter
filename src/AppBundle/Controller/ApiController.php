@@ -13,6 +13,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
+use Symfony\Component\Process\PhpProcess;
+
 
 class ApiController extends Controller
 {
@@ -45,30 +49,38 @@ class ApiController extends Controller
     public function updateAction(Request $request)
     {
 
-
-        $dispatcher = $this->container->get('bbit_async_dispatcher.dispatcher'); // get dispatcher service
-        $dispatcher->addAsyncEvent('updateTable', new UpdateTable());
-
         $response = new Response(
-            'OK',
+            'ok',
             Response::HTTP_OK,
             array('content-type' => 'text/html')
         );
 
+        ob_start();
+        // do initial processing here
+        echo $response; // send the response
+        header('Connection: close');
+        header('Content-Length: '.ob_get_length());
+        ob_end_flush();
+        ob_flush();
+        flush();
 
-        return $response;
 
-//        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
-//        $dateFromRest = json_decode($result);
-//        if ($dateFromRest == null) {
-//            return new Response('Error occurred', Response::HTTP_BAD_GATEWAY);
-//        }
-//        else {
-//            $filter = new Filter();
-//            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
-//
-//            return $response;
-//        }
+        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
+        $dateFromRest = json_decode($result);
+        if ($dateFromRest == null) {
+            return new Response('Error occurred', Response::HTTP_BAD_GATEWAY);
+        }
+        else {
+            $filter = new Filter();
+            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
+
+            $logFile = fopen("apilog.txt", "w") or die("Unable to open file!");
+
+
+            fwrite($logFile, serialize($tickesFromTojmiasto));
+            fclose($logFile);
+            return new Response();
+        }
 
     }
 

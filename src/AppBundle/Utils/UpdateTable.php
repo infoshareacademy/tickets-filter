@@ -8,15 +8,16 @@
 
 namespace AppBundle\Utils;
 
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\EventDispatcher\Event;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-class UpdateTable extends \Event
+class UpdateTable extends Event
 {
 
     public function __construct(){
-        $this->getData();
+
+      return  $this->getData();
+
     }
 
     private function getData(){
@@ -25,6 +26,7 @@ class UpdateTable extends \Event
         if ($dateFromRest == null) {
             return new JsonResponse(['error' => 'Tickets not found']);
         } else {
+            echo('asd');
             $filter = new Filter();
             $tickesFromTojmiasto = $filter->filterData($dateFromRest);
             return new JsonResponse($tickesFromTojmiasto);

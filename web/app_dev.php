@@ -2,6 +2,8 @@
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
+use AppBundle\Utils\UpdateTable;
+use BBIT\AsyncDispatcherBundle\BBITAsyncDispatcherBundle;
 
 // If you don't want to setup permissions the proper way, just uncomment the following PHP line
 // read http://symfony.com/doc/current/book/installation.html#checking-symfony-application-configuration-and-setup
@@ -29,3 +31,9 @@ $request = Request::createFromGlobals();
 $response = $kernel->handle($request);
 $response->send();
 $kernel->terminate($request, $response);
+//
+//$dispatcher = new Symfony\Component\EventDispatcher\EventDispatcher();
+//$dispatcher = new BBIT\AsyncDispatcherBundle\Component\EventDispatcher\AsynchronousEventDispatcher($dispatcher);
+// // get dispatcher service
+//$event = new UpdateTable();
+//$dispatcher->addAsyncEvent('updateTable', $event);

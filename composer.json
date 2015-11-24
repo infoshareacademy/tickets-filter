@@ -19,7 +19,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "bbit/async-dispatcher-bundle": "2.2.0",
         "incenteev/composer-parameter-handler": "~2.0",
-        "symfony/event-dispatcher": "^2.7"
+        "symfony/event-dispatcher": "^2.7",
+        "symfony/process": "^2.7"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"
