@@ -2,10 +2,11 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Ticket;
 use AppBundle\Utils\Filter;
 use AppBundle\Utils\UpdateTable;
 use AppBundle\Utils\PrettyJsonResponse;
-use AppBundle\Utils\Ticket;
+//use AppBundle\Utils\Ticket;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -32,13 +33,21 @@ class ApiController extends Controller
         }
         else {
             $filter = new Filter();
-            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
+            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
+
+            $this->saveToDB($tickesFromTrojmiasto);
+            //proba pierwsza
+            $biletyZBazy = $this->getData();
+
 
             if ($request->get('format') == 'pretty') {
 
-                return new PrettyJsonResponse($tickesFromTojmiasto);
+//                return new PrettyJsonResponse($tickesFromTrojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+                return new PrettyJsonResponse($biletyZBazy,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
             }
-            return new JsonResponse($tickesFromTojmiasto);
+//            return new JsonResponse($tickesFromTrojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+            return new JsonResponse($biletyZBazy, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+
         }
     }
 
@@ -118,5 +127,61 @@ class ApiController extends Controller
         return $result;
     }
 
+    private function saveToDB (array $filteredTickets) {
+
+        foreach ($filteredTickets as $filteredTicket) {
+
+            $ticketObject = $this->jsonToTicketObject($filteredTicket);
+
+            $doubleTicket = $this->findAction($ticketObject);
+            if (!$doubleTicket) {
+                $this->persistAction($ticketObject);
+            }
+        };
+
+    }
+
+    private function jsonToTicketObject ($jsonTicket) {
+        $ticket = new Ticket();
+        $ticket->setTitle($jsonTicket->title);
+        $ticket->setPrice($jsonTicket->price);
+        $ticket->setauctionUrl($jsonTicket->auctionUrl);
+        $ticket->setDescription($jsonTicket->description);
+
+        return $ticket;
+    }
+
+    private function findAction($ticketObject) {
+        $ticket = $this->getDoctrine()
+            ->getRepository('AppBundle:Ticket')
+            ->find($ticketObject->auctionUrl);
+        if ($ticket) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    private function persistAction($jsonTicket)
+    {
+        $ticket = new Ticket();
+        $ticket->setTitle($jsonTicket->title);
+        $ticket->setPrice($jsonTicket->price);
+        $ticket->setauctionUrl($jsonTicket->auctionUrl);
+        $ticket->setDescription($jsonTicket->description);
+
+        $em = $this->getDoctrine()->getManager();
+
+        $em->persist($ticket);
+        $em->flush();
+
+        return new Response('DB was updated');
+    }
+
+    private function getData() {
+        return $this->getDoctrine()
+            ->getRepository('AppBundle:Ticket')
+            ->findAll();
+    }
 
 }
