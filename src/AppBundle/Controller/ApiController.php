@@ -26,29 +26,12 @@ class ApiController extends Controller
      */
     public function importAction(Request $request)
     {
-//        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
-//        $dateFromRest = json_decode($result);
-//        if ($dateFromRest == null) {
-//            return new JsonResponse(['error' => 'Tickets not found']);
-//        }
-//        else {
-//            $filter = new Filter();
-//            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
-//
-//            $this->saveToDB($tickesFromTrojmiasto);
-            //proba druga
+        $ticketsFromDatabase = $this->getData();
 
-            $ticketsFromDatabase = $this->getData();
-
-            if ($request->get('format') == 'pretty') {
-
-//                return new PrettyJsonResponse($tickesFromTrojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-                return new PrettyJsonResponse($ticketsFromDatabase,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-            }
-//            return new JsonResponse($tickesFromTrojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-            return new JsonResponse($ticketsFromDatabase, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-
-//        }
+        if ($request->get('format') == 'pretty') {
+            return new PrettyJsonResponse($ticketsFromDatabase,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+        }
+        return new JsonResponse($ticketsFromDatabase, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
     }
 
 
@@ -182,6 +165,9 @@ class ApiController extends Controller
             ->findAll();
     }
 
+    /**
+     * removing all data in database
+     */
     private function resetData() {
         $tickets = $this->getData();
         $em = $this->getDoctrine()->getManager();
