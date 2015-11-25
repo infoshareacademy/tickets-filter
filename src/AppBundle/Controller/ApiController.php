@@ -41,15 +41,16 @@ class ApiController extends Controller
     public function updateAction(Request $request)
     {
 
-        $response = new Response(
-            'ok',
-            Response::HTTP_OK,
-            array('content-type' => 'text/html')
-        );
+//        $response = new Response(
+//            'Alleluja udalo sie'
+//            Response::HTTP_OK
+//            array('Access-Control-Allow-Origin' => '*', 'content-type' => 'text/html')
+//        );
 
         ob_start();
         // do initial processing here
-        echo $response; // send the response
+//        echo $response; // send the response
+        header('Access-Control-Allow-Origin: *');
         header('Connection: close');
         header('Content-Length: '.ob_get_length());
         ob_end_flush();
