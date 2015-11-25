@@ -26,29 +26,29 @@ class ApiController extends Controller
      */
     public function importAction(Request $request)
     {
-        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
-        $dateFromRest = json_decode($result);
-        if ($dateFromRest == null) {
-            return new JsonResponse(['error' => 'Tickets not found']);
-        }
-        else {
-            $filter = new Filter();
-            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
+//        $result = $this->callApi('GET', 'http://test.tickets-collector.infoshareaca.nazwa.pl/web/index.php/tickets');
+//        $dateFromRest = json_decode($result);
+//        if ($dateFromRest == null) {
+//            return new JsonResponse(['error' => 'Tickets not found']);
+//        }
+//        else {
+//            $filter = new Filter();
+//            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
+//
+//            $this->saveToDB($tickesFromTrojmiasto);
+            //proba druga
 
-            $this->saveToDB($tickesFromTrojmiasto);
-            //proba pierwsza
-            $biletyZBazy = $this->getData();
-
+            $ticketsFromDatabase = $this->getData();
 
             if ($request->get('format') == 'pretty') {
 
 //                return new PrettyJsonResponse($tickesFromTrojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-                return new PrettyJsonResponse($biletyZBazy,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+                return new PrettyJsonResponse($ticketsFromDatabase,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
             }
 //            return new JsonResponse($tickesFromTrojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
-            return new JsonResponse($biletyZBazy, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+            return new JsonResponse($ticketsFromDatabase, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
 
-        }
+//        }
     }
 
 
@@ -81,13 +81,10 @@ class ApiController extends Controller
         }
         else {
             $filter = new Filter();
-            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
+            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
 
-            $logFile = fopen("apilog.txt", "w") or die("Unable to open file!");
+            $this->saveToDB($tickesFromTrojmiasto);
 
-
-            fwrite($logFile, serialize($tickesFromTojmiasto));
-            fclose($logFile);
             return new Response();
         }
 
