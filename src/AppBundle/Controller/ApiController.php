@@ -27,15 +27,20 @@ class ApiController extends Controller
         }
         else {
             $filter = new Filter();
-            $tickesFromTojmiasto = $filter->filterData($dateFromRest);
+            $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
 
-            $this->saveToDB($tickesFromTojmiasto);
+            $this->saveToDB($tickesFromTrojmiasto);
+            //proba pierwsza
+            $biletyZBazy = $this->getData();
+
 
             if ($request->get('format') == 'pretty') {
 
-                return new PrettyJsonResponse($tickesFromTojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+//                return new PrettyJsonResponse($tickesFromTrojmiasto,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+                return new PrettyJsonResponse($biletyZBazy,200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
             }
-            return new JsonResponse($tickesFromTojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+//            return new JsonResponse($tickesFromTrojmiasto, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
+            return new JsonResponse($biletyZBazy, 200,  array('Access-Control-Allow-Origin' => '*', 'Content-Type' => 'application/json'));
 
         }
     }
@@ -124,17 +129,10 @@ class ApiController extends Controller
         return new Response('DB was updated');
     }
 
-//    private function showAction($id)
-//    {
-//        $ticket = $this->findAction($id);
-//
-//        if (!$ticket) {
-//            throw $this->createNotFoundException(
-//                'No ticket found for id '.$id
-//            );
-//        }
-//
-//        // ... do something, like pass the $product object into a template
-//    }
+    private function getData() {
+        return $this->getDoctrine()
+            ->getRepository('AppBundle:Ticket')
+            ->findAll();
+    }
 
 }
