@@ -83,6 +83,7 @@ class ApiController extends Controller
             $filter = new Filter();
             $tickesFromTrojmiasto = $filter->filterData($dateFromRest);
 
+            $this->resetData();
             $this->saveToDB($tickesFromTrojmiasto);
 
             return new Response();
@@ -179,6 +180,16 @@ class ApiController extends Controller
         return $this->getDoctrine()
             ->getRepository('AppBundle:Ticket')
             ->findAll();
+    }
+
+    private function resetData() {
+        $tickets = $this->getData();
+        $em = $this->getDoctrine()->getManager();
+
+        foreach ($tickets as $ticket) {
+            $em->remove($ticket);
+        }
+        $em->flush();
     }
 
 }
