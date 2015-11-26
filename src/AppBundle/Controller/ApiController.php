@@ -22,7 +22,7 @@ use Symfony\Component\Process\PhpProcess;
 class ApiController extends Controller
 {
     /**
-     * @Route("/")
+     * @Route("/import")
      */
     public function importAction(Request $request)
     {
