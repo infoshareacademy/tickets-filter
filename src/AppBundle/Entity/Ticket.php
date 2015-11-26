@@ -43,9 +43,9 @@ class Ticket
     public $description;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="price", type="integer")
+     * @ORM\Column(name="price", type="string", length=11)
      */
     public $price;
 
