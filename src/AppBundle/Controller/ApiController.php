@@ -129,6 +129,7 @@ class ApiController extends Controller
         $ticket->setPrice($jsonTicket->price);
         $ticket->setauctionUrl($jsonTicket->auctionUrl);
         $ticket->setDescription($jsonTicket->description);
+        $ticket->setType($jsonTicket->type);
 
         return $ticket;
     }
@@ -151,6 +152,7 @@ class ApiController extends Controller
         $ticket->setPrice($jsonTicket->price);
         $ticket->setauctionUrl($jsonTicket->auctionUrl);
         $ticket->setDescription($jsonTicket->description);
+        $ticket->setType($jsonTicket->type);
 
         $em = $this->getDoctrine()->getManager();
 

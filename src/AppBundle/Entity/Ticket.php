@@ -49,6 +49,13 @@ class Ticket
      */
     public $price;
 
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="type", type="string", length=11)
+     */
+    public $type;
+
 
     public function __construct(){
 
@@ -167,21 +174,21 @@ class Ticket
      *
      * @return Ticket
      */
-    public function setCreationDate($creationDate)
+    public function setType($type)
     {
-        $this->creationDate = $creationDate;
+        $this->type = $type;
 
         return $this;
     }
 
     /**
-     * Get creationDate
+     * Get type
      *
-     * @return \DateTime
+     * @return \Type
      */
-    public function getCreationDate()
+    public function getType()
     {
-        return $this->creationDate;
+        return $this->type;
     }
 }
 
